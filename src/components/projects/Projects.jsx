@@ -8,7 +8,7 @@ export default function Projects() {
     <Section
       id="projects"
       title="Featured Projects"
-      subtitle="Production-minded builds with demos and GitHub links."
+      subtitle="Production-minded builds with clean architecture, smooth UX, and real demos."
     >
       <div className="grid gap-6 sm:grid-cols-2">
         {PROJECTS.map((p) => (

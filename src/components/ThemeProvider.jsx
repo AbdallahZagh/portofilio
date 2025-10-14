@@ -1,24 +1,29 @@
 import { useEffect, useState } from "react";
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState("system");
+  // default to 'dark' if no preference stored
+  const [theme, setTheme] = useState(() => localStorage.getItem("theme") || "dark");
 
-  useEffect(() => {
-    const stored = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const next = stored || (prefersDark ? "dark" : "light");
-    setTheme(next);
-    document.documentElement.classList.toggle("dark", next === "dark");
-  }, []);
-
-  const toggle = () => {
-    setTheme((t) => {
-      const next = t === "dark" ? "light" : "dark";
-      localStorage.setItem("theme", next);
-      document.documentElement.classList.toggle("dark", next === "dark");
-      return next;
-    });
+  const apply = (mode) => {
+    const root = document.documentElement;
+    const systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const isDark = mode === "dark" || (mode === "system" && systemDark);
+    root.classList.toggle("dark", isDark);
   };
 
-  return { theme, toggle };
+  useEffect(() => {
+    apply(theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    const mql = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => theme === "system" && apply("system");
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, [theme]);
+
+  const toggle = () => setTheme((t) => (t === "dark" ? "light" : "dark"));
+
+  return { theme, toggle, setTheme };
 };
