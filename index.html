@@ -1,12 +1,20 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <script>
+  (function(){
+    try{
+      var stored = localStorage.getItem('theme');
+      if (!stored || stored === 'dark') document.documentElement.classList.add('dark');
+    }catch(e){}
+  })();
+</script>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/portofilio/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>portofilio</title>
-    <script type="module" crossorigin src="/portofilio/assets/index-BFps5cIC.js"></script>
-    <link rel="stylesheet" crossorigin href="/portofilio/assets/index-RJJZbBUp.css">
+    <script type="module" crossorigin src="/portofilio/assets/index-BCt3Yz9S.js"></script>
+    <link rel="stylesheet" crossorigin href="/portofilio/assets/index-bBfXCQ9a.css">
   </head>
   <body>
     <div id="root"></div>
